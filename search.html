@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #loader_div{
+            display: none;/*intially this element will not display in webpage when we search somethingit will fetch and display the result in this element*/ 
+        }
+        #Movies{
+          display: grid;
+          grid-template-columns: repeat(4,1fr);
+        }
+    </style>
+</head>
+<body>
+    <h1>Hotstar</h1>
+    <a href="search.html">Search Movies</a>
+
+    <div id="carousel"></div>
+
+    <div>
+      <input type="text" id="query"/>
+      <button onclick="searchMovies()">search</button>
+    </div>
+
+    <div id="loader_div">
+        <iframe 
+        src="https://giphy.com/embed/3o7bu3XilJ5BOiSGic"
+        width="480"
+        height="480"
+        frameborder="0"
+        class="giphy-embed"
+        allowfullscreen
+      ></iframe>
+    </div>
+    <div id="Movies">
+      
+    </div>
+  </body>
+</html>
+<script src="search.js"></script>

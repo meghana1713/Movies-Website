@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>YouTube</h1>
+    <input type="text" id="search"/>
+    <button onclick="searchVideo()">Search</button>
+    <div id="result"></div>
+ </body>
+</html>
+<script>
+    let APIKEY=`AIzaSyCg7_IK0h76VUuB1NOdDvKM3-Hy_aShqsE`;
+    let Searc_result_div=document.getElementById("result");
+    async function searchVideo() {
+        try{
+            let query=document.getElementById("search").value;
+            let response= await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&key=${APIKEY}&q=${query}&type=video&maxResult=20`);
+        let data= await response.json();/*The items array is under the root response object, not nested inside any other object.
+
+In your case, you can access it using data.items in JavaScript, where data is the parsed JSON response.*/
+appendingToDom(data.items);// in items which is inside response object there are id,url,title so on....
+        }
+        catch(error){
+            console.log(error);
+        }
+        }
+        
+    function appendingToDom(array){//items is an array
+        Searc_result_div.innerHTML="";
+        array.forEach((element)=>{//each object in an array
+            const {snippet,id}=element;/*it is destructuring objects which isDestructuring is a way to extract values from objects or arrays and assign them to variables here property names and variable names must be same here it is shorthand to element.snippet now which is equal to snippet as an another object,element* and element.idsame as id now we can referennce them by this variable names*/
+            let url=snippet.thumbnails.medium.url;
+            let title=snippet.title;
+            let videoIdvalue = id.videoId;
+            let div=document.createElement("div");
+            let image=document.createElement("img");
+            image.src=url;
+            let name=document.createElement("h4")
+            name.innerHTML=title;
+            div.append(image,name);
+    let data1={videoId:videoIdvalue,snippet};//object creation manual as snippet variable from line 35 is an object here it is a property for this data1 object "videoIdvalue" this value is got from line38 as id is an object inside that videoId is an property 
+    
+    div.onclick=()=>{
+        showvideo(data1);
+        console.log(data1);
+    }
+    Searc_result_div.append(div);
+})
+    };
+    function showvideo(data){
+        window.location.href="video.html";
+        localStorage.setItem("clicked_video",JSON.stringify(data));
+    }
+    </script>
